@@ -17,13 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(
-    cors({
-        origin: "*",
-        credentials: true,
-        allowedHeaders: "Content-Type, Authorization",
-    })
-);
+app.use(cors());
 
 //routes
 app.use("/api/v1/user", userRoute);

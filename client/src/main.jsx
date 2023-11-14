@@ -9,7 +9,7 @@ import { UserContextProvider } from "./Context/userContext";
 import "./index.css";
 
 axios.defaults.baseURL = "https://travel-nest-full-stack.vercel.app";
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <UserContextProvider>

@@ -7,8 +7,7 @@
     "scripts": {
         "start": "node index.js",
         "dev": "nodemon index.js",
-        "build": "npm i && cd ../client && npm run build",
-        "preinstall": "prisma generate"
+        "postinstall": "prisma generate"
     },
     "keywords": [],
     "author": "",

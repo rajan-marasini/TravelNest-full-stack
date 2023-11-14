@@ -54,12 +54,12 @@ const Home = () => {
                         className="cursor-pointer py-6"
                         to={`place/${place.id}`}
                     >
-                        <div className="rounded2xl flex h-full w-full">
+                        <div className="rounded2xl flex h-48 w-full">
                             {place.photos?.[0] && (
                                 <img
                                     src={place.photos[0]}
                                     alt=""
-                                    className="rounded-2xl h-48 w-full object-cover transition-all duration-300 ease-in-out  hover:scale-105 bg-center
+                                    className="rounded-2xl h-full w-full object-cover transition-all duration-300 ease-in-out  hover:scale-105 bg-center
                                     "
                                 />
                             )}

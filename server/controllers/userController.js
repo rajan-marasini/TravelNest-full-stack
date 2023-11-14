@@ -64,11 +64,17 @@ export const userLogin = asyncHandler(async (req, res) => {
                         expiresIn: "7d",
                     }
                 );
-                res.status(200).cookie("token", token).send({
-                    success: true,
-                    message: "Login Successful",
-                    user,
-                });
+                res.status(200)
+                    .cookie("token", token, {
+                        httpOnly: true,
+                        sameSite: "none",
+                        secure: false,
+                    })
+                    .send({
+                        success: true,
+                        message: "Login Successful",
+                        user,
+                    });
             } else {
                 res.status(200).send({
                     success: false,

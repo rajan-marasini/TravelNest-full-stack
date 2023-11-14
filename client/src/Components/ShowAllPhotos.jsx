@@ -32,7 +32,7 @@ const ShowAllPhotos = ({ place, setShowAllPhotos }) => {
                     <div className="w-full my-2" key={photo}>
                         <img
                             className="h-full w-full object-cover"
-                            src={`/uploads/${photo}`}
+                            src={photo}
                             alt=""
                         />
                     </div>

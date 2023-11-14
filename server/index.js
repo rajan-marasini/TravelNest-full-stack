@@ -19,6 +19,16 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(cors());
 
+app.use((req, res, next) => {
+    res.header(
+        "Access-Control-Allow-Origin",
+        "https://travel-nest-full-stack-one.vercel.app"
+    );
+    res.header("Access-Control-Allow-Credentials", true);
+    // other headers...
+    next();
+});
+
 //routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/place", placeRoute);

@@ -59,7 +59,7 @@ const Home = () => {
                                 <img
                                     src={place.photos[0]}
                                     alt=""
-                                    className="rounded-2xl h-full w-full object-cover transition-all duration-300 ease-in-out  hover:scale-105 bg-center
+                                    className="rounded-2xl h-48 w-full object-cover transition-all duration-300 ease-in-out  hover:scale-105 bg-center
                                     "
                                 />
                             )}

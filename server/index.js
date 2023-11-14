@@ -17,12 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(
-    cors({
-        origin: "https://travel-nest-full-stack-one.vercel.app",
-        credentials: true,
-    })
-);
+app.use(cors());
 
 //routes
 app.use("/api/v1/user", userRoute);

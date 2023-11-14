@@ -17,17 +17,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(cors());
-
-app.use((req, res, next) => {
-    res.header(
-        "Access-Control-Allow-Origin",
-        "https://travel-nest-full-stack-one.vercel.app"
-    );
-    res.header("Access-Control-Allow-Credentials", true);
-    // other headers...
-    next();
-});
+app.use(
+    cors({
+        origin: "https://travel-nest-full-stack-one.vercel.app",
+        credentials: true,
+    })
+);
 
 //routes
 app.use("/api/v1/user", userRoute);

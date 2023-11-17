@@ -68,6 +68,7 @@ export const userLogin = asyncHandler(async (req, res) => {
                 res.status(200)
                     .cookie("token", token, {
                         httpOnly: true,
+                        sameSite: "none",
                     })
                     .send({
                         success: true,

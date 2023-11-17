@@ -8,14 +8,16 @@ import App from "./App.jsx";
 import { UserContextProvider } from "./Context/userContext";
 import "./index.css";
 
-axios.defaults.baseURL = "https://travel-nest-full-stack.vercel.app";
-// axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <UserContextProvider>
-        <BrowserRouter>
-            <App />
-            <ToastContainer />
-        </BrowserRouter>
-    </UserContextProvider>
+    <React.StrictMode>
+        <UserContextProvider>
+            <BrowserRouter>
+                <App />
+                <ToastContainer />
+            </BrowserRouter>
+        </UserContextProvider>
+    </React.StrictMode>
 );

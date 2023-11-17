@@ -3,14 +3,10 @@ import { prisma } from "../config/prismaConfig.js";
 
 export const isSignedIn = async (req, res, next) => {
     try {
+        console.log(req);
         const { token } = req.cookies;
 
-        if (!token) {
-            return res.status(200).send({
-                success: false,
-                message: "You need to login ",
-            });
-        } else {
+        if (token) {
             const { id } = await jwt.verify(token, process.env.JWT_SECRET);
 
             const user = await prisma.user.findUnique({ where: { id } });
@@ -20,8 +16,15 @@ export const isSignedIn = async (req, res, next) => {
             req.user = user;
 
             next();
+        } else {
+            res.status(200).send({ message: "you need to login" });
         }
     } catch (error) {
         console.log(error.message);
+        res.status(404).send({
+            success: false,
+            message: "Something went wrong",
+            error,
+        });
     }
 };

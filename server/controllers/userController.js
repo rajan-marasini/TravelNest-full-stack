@@ -55,8 +55,6 @@ export const userLogin = asyncHandler(async (req, res) => {
             );
 
             if (passwordMatch) {
-                delete user.password;
-
                 const token = await jwt.sign(
                     { id: user.id },
                     process.env.JWT_SECRET,
@@ -64,11 +62,12 @@ export const userLogin = asyncHandler(async (req, res) => {
                         expiresIn: "7d",
                     }
                 );
+
+                delete user.password;
+
                 res.status(200)
                     .cookie("token", token, {
                         httpOnly: true,
-                        sameSite: "none",
-                        secure: false,
                     })
                     .send({
                         success: true,
@@ -97,11 +96,11 @@ export const userLogin = asyncHandler(async (req, res) => {
     }
 });
 
-export const useProfile = asyncHandler(async (req, res) => {
+export const userProfile = asyncHandler(async (req, res) => {
     try {
         const { user } = req;
 
-        res.status(200).send({ user });
+        res.send({ user });
     } catch (error) {
         console.log(error.message);
         return res.status(404).send({

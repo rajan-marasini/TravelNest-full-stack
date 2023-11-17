@@ -12,8 +12,8 @@ export const uploadPhoto = asyncHandler(async (req, res) => {
 
         // Upload each image to Cloudinary
         for (const file of req.files) {
-            await new Promise((resolve, reject) => {
-                cloudinary.uploader
+            try {
+                const result = await cloudinary.uploader
                     .upload_stream(
                         {
                             resource_type: "image",
@@ -21,19 +21,24 @@ export const uploadPhoto = asyncHandler(async (req, res) => {
                         (error, result) => {
                             if (error) {
                                 console.error(error);
-                                reject({ message: "Image upload failed" });
+                                throw new Error("Image upload failed");
                             } else {
-                                // Image successfully uploaded, add Cloudinary response to the array
-                                uploadedImages.push(result);
-                                resolve();
+                                // Push only the URL to the array
+                                uploadedImages.push(result.secure_url);
                             }
                         }
                     )
                     .end(file.buffer);
-            }).catch((error) => {
+
+                if (!result || !result.secure_url) {
+                    throw new Error("Image upload failed");
+                }
+            } catch (error) {
                 console.error(error);
-                res.status(500).send({ message: "Internal server error" });
-            });
+                return res
+                    .status(500)
+                    .send({ message: "Internal server error" });
+            }
         }
 
         res.status(200).send(uploadedImages);
@@ -50,7 +55,7 @@ export const uploadByLink = async (req, res) => {
         cloudinary.uploader
             .upload(link)
             .then((result) => {
-                res.status(200).send(result.url);
+                res.status(200).send(result.secure_url);
             })
             .catch((err) => {
                 res.status(200).send(err.message);

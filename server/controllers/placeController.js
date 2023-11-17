@@ -110,6 +110,9 @@ export const getAllPlaceOfUser = asyncHandler(async (req, res) => {
 
         const places = await prisma.place.findMany({
             where: { owner: user.email },
+            orderBy: {
+                createdAt: "desc",
+            },
         });
 
         res.status(200).send({ places });

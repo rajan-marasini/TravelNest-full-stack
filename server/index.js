@@ -19,7 +19,11 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(
     cors({
-        origin: "https://travel-nest-full-stack-one.vercel.app",
+        origin: [
+            "https://travel-nest-full-stack-one.vercel.app",
+            "https://travel-nest-full-stack-razan-marasinis-projects.vercel.app",
+            "https://travel-nest-full-stack-git-main-razan-marasinis-projects.vercel.app",
+        ],
         credentials: true,
     })
 );

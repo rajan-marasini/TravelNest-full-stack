@@ -11,35 +11,28 @@ export const uploadPhoto = asyncHandler(async (req, res) => {
         const uploadedImages = [];
 
         // Upload each image to Cloudinary
-        for (const file of req.files) {
-            try {
-                const result = await cloudinary.uploader
-                    .upload_stream(
+        await Promise.all(
+            req.files.map(async (file) => {
+                try {
+                    const result = await cloudinary.uploader.upload(
+                        file.buffer,
                         {
                             resource_type: "image",
-                        },
-                        (error, result) => {
-                            if (error) {
-                                console.error(error);
-                                throw new Error("Image upload failed");
-                            } else {
-                                // Push only the URL to the array
-                                uploadedImages.push(result.secure_url);
-                            }
                         }
-                    )
-                    .end(file.buffer);
+                    );
 
-                if (!result || !result.secure_url) {
+                    if (!result || !result.secure_url) {
+                        throw new Error("Image upload failed");
+                    }
+
+                    // Push only the URL to the array
+                    uploadedImages.push(result.secure_url);
+                } catch (error) {
+                    console.error(error);
                     throw new Error("Image upload failed");
                 }
-            } catch (error) {
-                console.error(error);
-                return res
-                    .status(500)
-                    .send({ message: "Internal server error" });
-            }
-        }
+            })
+        );
 
         res.status(200).send(uploadedImages);
     } catch (error) {

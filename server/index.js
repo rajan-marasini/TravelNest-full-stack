@@ -19,9 +19,8 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(
     cors({
-        credentials: true,
         origin: "https://travel-nest-full-stack-one.vercel.app",
-        preflightContinue: true,
+        credentials: true,
     })
 );
 

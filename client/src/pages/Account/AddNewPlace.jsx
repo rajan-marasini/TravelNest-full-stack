@@ -71,7 +71,7 @@ const AddNewPlace = () => {
             });
 
             for (const photo of data) {
-                imageUrl.push(photo.url);
+                imageUrl.push(photo);
             }
 
             setAddedPhotos((prev) => [...prev, ...imageUrl]);
@@ -170,7 +170,7 @@ const AddNewPlace = () => {
                     {addedPhotos.length > 0 && (
                         <>
                             {addedPhotos.map((photo, i) => (
-                                <div key={photo} className="h-32 relative">
+                                <div key={i} className="h-32 relative">
                                     <img
                                         src={photo}
                                         alt=""

@@ -12,8 +12,8 @@ export const uploadPhoto = asyncHandler(async (req, res) => {
 
         // Upload each image to Cloudinary
         for (const file of req.files) {
-            try {
-                const result = await cloudinary.uploader
+            const result = await new Promise((resolve, reject) => {
+                cloudinary.uploader
                     .upload_stream(
                         {
                             resource_type: "image",
@@ -21,26 +21,19 @@ export const uploadPhoto = asyncHandler(async (req, res) => {
                         (error, result) => {
                             if (error) {
                                 console.error(error);
-                                throw new Error("Image upload failed");
+                                reject({ message: "Image upload failed" });
                             } else {
-                                // Push only the URL to the array
+                                // Image successfully uploaded, add Cloudinary response to the array
                                 uploadedImages.push(result.secure_url);
+                                resolve();
                             }
                         }
                     )
-                    .end(file.buffer);
-
-                if (!result || !result.secure_url) {
-                    throw new Error("Image upload failed");
-                }
-            } catch (error) {
-                console.error(error);
-                return res
-                    .status(500)
-                    .send({ message: "Internal server error" });
-            }
+                    .end(file.buffer); // Use file.buffer to get the file content from memory
+            });
         }
 
+        // Send back Cloudinary responses for each uploaded image
         res.status(200).send(uploadedImages);
     } catch (error) {
         console.error(error);

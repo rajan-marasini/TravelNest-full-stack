@@ -3,7 +3,6 @@ import { prisma } from "../config/prismaConfig.js";
 
 export const isSignedIn = async (req, res, next) => {
     try {
-        console.log(req);
         const { token } = req.cookies;
 
         if (token) {
